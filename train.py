@@ -24,7 +24,7 @@ def tabular_q_learning(env_name="MiniGrid-Empty-8x8-v0", episodes=5000, alpha=0.
     def get_state(obs):
         """✅ Extracts the state representation from the MiniGrid environment."""
         # TODO: Represent the state using the agent's position and direction.
-        return (obs[0], obs[1])
+        return (obs[0], obs[1], obs[10], obs[11], obs[12], obs[13])
 
     for episode in range(episodes):
         # TODO: Reset the environment at the beginning of each episode.

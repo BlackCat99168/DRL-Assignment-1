@@ -52,6 +52,12 @@ class SimpleTaxiEnv():
                 if flag == 0:
                     break
         
+        for i in range(4):
+            obstacles_pos = random.choice(available_positions)
+            while obstacles_pos in self.stations:
+                obstacles_pos = random.choice(available_positions)
+            self.obstacles.add(obstacles_pos)
+
         self.passenger_loc = random.choice([pos for pos in self.stations])
         
         
