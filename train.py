@@ -24,8 +24,9 @@ def tabular_q_learning(env_name="MiniGrid-Empty-8x8-v0", episodes=5000, alpha=0.
     def get_state(obs):
         """✅ Extracts the state representation from the MiniGrid environment."""
         # TODO: Represent the state using the agent's position and direction.
-        return (obs[0], obs[1], obs[10], obs[11], obs[12], obs[13])
+        return (obs[0], obs[1], obs[10], obs[11], obs[12], obs[13], obs[-2])
 
+    cnt = 0
     for episode in range(episodes):
         # TODO: Reset the environment at the beginning of each episode.
         env_size = random.choice([5,6,7,8,9,10])
@@ -35,7 +36,10 @@ def tabular_q_learning(env_name="MiniGrid-Empty-8x8-v0", episodes=5000, alpha=0.
         done = False
         total_reward = 0
 
+        pick_flag = 0
+        length = 0
         while not done:
+            length += 1
             # TODO: Initialize the state in the Q-table if it is not already present.
             if state not in Q_table:
                 Q_table[state] = np.zeros(6)
@@ -47,8 +51,17 @@ def tabular_q_learning(env_name="MiniGrid-Empty-8x8-v0", episodes=5000, alpha=0.
 
             # TODO: Execute the action and observe the next state and reward.
             obs, reward, done, truncated = env.step(action)
+            if action == 4 and reward < -5 and pick_flag == 0:
+                reward = -100
+            elif action == 4 and reward >= -5 and pick_flag == 0:
+                print(length)
+                reward = 100
+                pick_flag = 1
             next_state = get_state(obs)
             total_reward += reward
+
+            if length < 4998 and done:
+                cnt += 1
 
             # TODO: Initialize next_state in the Q-table if it is not already present.
             if next_state not in Q_table:
@@ -67,8 +80,10 @@ def tabular_q_learning(env_name="MiniGrid-Empty-8x8-v0", episodes=5000, alpha=0.
         epsilon = max(epsilon_end, epsilon * decay_rate)
 
         if (episode + 1) % 1 == 0:
-            avg_reward = np.mean(rewards_per_episode[-100:])
+            avg_reward = np.mean(rewards_per_episode[-1:])
             print(f"Episode {episode + 1}/{episodes}, Avg Reward: {avg_reward:.4f}, Epsilon: {epsilon:.3f}")
+            print()
+    print("Success Count:", cnt)
 
     return Q_table, rewards_per_episode
 
