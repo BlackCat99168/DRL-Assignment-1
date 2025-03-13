@@ -24,7 +24,7 @@ def tabular_q_learning(env_name="MiniGrid-Empty-8x8-v0", episodes=5000, alpha=0.
     def get_state(obs):
         """✅ Extracts the state representation from the MiniGrid environment."""
         # TODO: Represent the state using the agent's position and direction.
-        return (obs[0], obs[1], obs[10], obs[11], obs[12], obs[13], obs[-2])
+        return (obs[0], obs[1], obs[10], obs[11], obs[12], obs[13], obs[-2], obs[-1])
 
     cnt = 0
     for episode in range(episodes):
@@ -54,9 +54,11 @@ def tabular_q_learning(env_name="MiniGrid-Empty-8x8-v0", episodes=5000, alpha=0.
             if action == 4 and reward < -5 and pick_flag == 0:
                 reward = -100
             elif action == 4 and reward >= -5 and pick_flag == 0:
-                print(length)
                 reward = 100
                 pick_flag = 1
+            if done == True:
+                print(length)
+                reward = 1000
             next_state = get_state(obs)
             total_reward += reward
 

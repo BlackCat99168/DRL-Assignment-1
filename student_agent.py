@@ -7,7 +7,7 @@ import gym
 def get_state(obs):
     """✅ Extracts the state representation from the MiniGrid environment."""
     # TODO: Represent the state using the agent's position and direction.
-    return (obs[0], obs[1], obs[10], obs[11], obs[12], obs[13], obs[-2])
+    return (obs[0], obs[1], obs[10], obs[11], obs[12], obs[13], obs[-2], obs[-1])
 
 def get_action(obs):
     
