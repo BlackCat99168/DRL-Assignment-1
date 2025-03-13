@@ -4,6 +4,7 @@ import importlib.util
 import time
 from IPython.display import clear_output
 import random
+import pickle
 # This environment allows you to verify whether your program runs correctly during testing, 
 # as it follows the same observation format from `env.reset()` and `env.step()`. 
 # However, keep in mind that this is just a simplified environment. 
@@ -33,7 +34,6 @@ class SimpleTaxiEnv():
         """Reset the environment, ensuring Taxi, passenger, and destination are not overlapping obstacles"""
         self.current_fuel = self.fuel_limit
         self.passenger_picked_up = False
-        
 
         available_positions = [
             (x, y) for x in range(self.grid_size) for y in range(self.grid_size)
@@ -41,6 +41,16 @@ class SimpleTaxiEnv():
         ]
 
         self.taxi_pos = random.choice(available_positions)
+
+        for i in range(4):
+            while True:
+                self.stations[i] = random.choice(available_positions)
+                flag = 0
+                for j in range(i):
+                    if self.stations[j] == self.stations[i]:
+                        flag = 1
+                if flag == 0:
+                    break
         
         self.passenger_loc = random.choice([pos for pos in self.stations])
         
