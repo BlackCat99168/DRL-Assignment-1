@@ -7,7 +7,7 @@ import gym
 def get_state(obs):
     """✅ Extracts the state representation from the MiniGrid environment."""
     # TODO: Represent the state using the agent's position and direction.
-    return (obs[0], obs[1])
+    return (obs[0], obs[1], obs[10], obs[11], obs[12], obs[13])
 
 def get_action(obs):
     
@@ -20,10 +20,13 @@ def get_action(obs):
         q_table = pickle.load(f)
     state = get_state(obs)
     action = 0
-    if np.random.rand() < 0.1:
-        action = random.choice([0, 1, 2, 3, 4, 5])
+    if state in q_table:
+        if np.random.rand() < 0.1:
+            action = random.choice([0, 1, 2, 3, 4, 5])
+        else:
+            action = np.argmax(q_table[state])
     else:
-        action = np.argmax(q_table[state])
+        action = random.choice([0, 1, 2, 3, 4, 5])
     return action # Choose a random action
     # You can submit this random agent to evaluate the performance of a purely random strategy.
 
