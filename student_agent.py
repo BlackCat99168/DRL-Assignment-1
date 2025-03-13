@@ -21,7 +21,7 @@ def get_action(obs):
     state = get_state(obs)
     action = 0
     if state in q_table:
-        if np.random.rand() < 0.1:
+        if np.random.rand() < 0.000001:
             action = random.choice([0, 1, 2, 3, 4, 5])
         else:
             action = np.argmax(q_table[state])
