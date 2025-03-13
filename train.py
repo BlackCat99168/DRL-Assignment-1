@@ -72,7 +72,7 @@ def tabular_q_learning(env_name="MiniGrid-Empty-8x8-v0", episodes=5000, alpha=0.
 
     return Q_table, rewards_per_episode
 
-q_table, rewards = tabular_q_learning("MiniGrid-Empty-8x8-v0", episodes=2000)
+q_table, rewards = tabular_q_learning("MiniGrid-Empty-8x8-v0", episodes=5000)
 
 with open('q_table.pickle', 'wb') as f:
     pickle.dump(q_table, f)
